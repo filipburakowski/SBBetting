@@ -1,13 +1,13 @@
 let menuArray = [];
 
-const buildAndReturnMenuArray = function (data) {
+const buildAndReturnMenuArray = (data) => {
     let menuArray = [];
     let workArray = [];
 
     data.forEach(obj => {
         var item = obj;
-        var parentCategory = item["parentCategory"];
-        var categoryId = item["categoryId"];
+        var parentCategory = item.parentCategory;
+        var categoryId = item.categoryId;
 
         if (workArray[parentCategory]) {
             var item = {
@@ -38,7 +38,6 @@ function fetchMenuData () {
 
 fetchMenuData()
     .then(data => {
-        console.log(data.data);
         menuArray = buildAndReturnMenuArray(data.data);
         console.log(menuArray);
     });

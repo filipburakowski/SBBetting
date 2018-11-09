@@ -1,0 +1,23 @@
+{
+  "name": "test-sbbetting",
+  "version": "1.0.0",
+  "description": "Application created for recruitment process at 'Tip and Donation'",
+  "main": "src/scripts/main.js",
+  "scripts": {
+    "dev": "parcel src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/filipburakowski/SBBetting.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/filipburakowski/SBBetting/issues"
+  },
+  "homepage": "https://github.com/filipburakowski/SBBetting#readme",
+  "dependencies": {
+    "parcel-bundler": "^1.10.3"
+  }
+}
