@@ -1,0 +1,46 @@
+$background_On: #006400;
+$background_Off: #32CD32;
+$background_Hover: #228B22;
+$fontSize: 12px;
+$distance: 6px;
+
+html, body {
+  font-size: $fontSize;
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.categories {
+  width: 400px;
+  .lvl_1, .lvl_2, .lvl_3 {
+    padding: $distance 0;
+    background-color: $background_On;
+    &:hover {
+      background-color: $background_Hover;
+      cursor: pointer;
+    }
+  }
+  .item_description {
+    padding-left: $distance;
+  }
+  .menu_toggle {
+    float: right;
+    padding-right: $distance;
+  }
+  .menu_lvl_2, .menu_lvl_3 {
+    background-color: $background_On;
+    &:hover {
+      background-color: $background_Hover;
+      cursor: pointer;
+    }
+  }
+}
+
+.error_message {
+  padding: $distance;
+}
+
+.hidden {
+  display: none;
+}
