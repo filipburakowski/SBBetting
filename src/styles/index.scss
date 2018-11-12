@@ -13,18 +13,10 @@ html, body {
 
 .categories {
   width: 400px;
-  .lvl_1, .lvl_2, .lvl_3 {
-    padding: $distance 0;
-    background-color: $background_On;
-    &:hover {
-      background-color: $background_Hover;
-      cursor: pointer;
-    }
-  }
   .item_description {
     padding-left: $distance;
   }
-  .menu_toggle {
+  .event_count {
     float: right;
     padding-right: $distance;
   }
@@ -35,6 +27,10 @@ html, body {
       cursor: pointer;
     }
   }
+}
+
+.menu_lvl_1, .menu_lvl_2, .menu_lvl_3 {
+  padding: $distance 0;
 }
 
 .error_message {

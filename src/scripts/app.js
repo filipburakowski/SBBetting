@@ -3,10 +3,18 @@ import '../styles/index.scss';
 const menuNode = document.querySelector('.categories');
 let menuArray = [];
 
-const toggleMenu = (obj,parentCategory) => {
+const toggleMenu = (obj, parentCategory) => {
+    let plusMinusElement = obj.querySelector('.menu_toggle');
     let subElements = obj.querySelectorAll(`div[parentCategory="${parentCategory}"]`);
-    for (let i = 0; i<subElements.length; i++) {
-        subElements[i].classList.toggle('hidden')
+
+    //switching + and - if menu is clicked
+    if (plusMinusElement.innerHTML === '+') {
+        plusMinusElement.innerHTML = '-'
+    } else
+        plusMinusElement.innerHTML = '+';
+
+    for (let i = 0; i < subElements.length; i++) {
+        subElements[i].classList.toggle('hidden');
     }
 };
 
@@ -41,23 +49,32 @@ const buildAndReturnMenuArray = (data) => {
     return menuArray;
 };
 
-const buildMenu = (parent,items) => {
+const buildMenu = (parent, items) => {
     items.forEach(obj => {
         if (obj) {
-            let element = document.createElement('div');
-            element.classList.add(`lvl_${obj.item.level}`);
-            element.classList.add(`item`);
-            element.setAttribute('parentCategory',`${obj.item.parentCategory}`);
-            element.onclick = () => toggleMenu(element,obj.item.categoryId);
-            element.innerHTML = `<span class='item_description'>${obj.item.categoryName}</span><span class='menu_toggle'>+<span>${obj.item.eventsCount}</span></span>`;
-            parent.appendChild(element);
+            let mainElement = document.createElement('div');
+            let subElement = document.createElement('div');
+            mainElement.classList.add(`lvl_${obj.item.level}`);
+            subElement.classList.add(`menu_lvl_${obj.item.level}`);
+
+            //if element is not first level of menu hide
+            if (!subElement.classList.contains(`menu_lvl_1`)) {
+                subElement.classList.add('hidden')
+            }
+
+            subElement.setAttribute('parentCategory', `${obj.item.parentCategory}`);
+            subElement.setAttribute('categoryId', `${obj.item.categoryId}`);
+            subElement.onclick = () => toggleMenu(mainElement, obj.item.categoryId);
+            subElement.innerHTML = `<span class='item_description'>${obj.item.categoryName}</span><span class='event_count'><span class='menu_toggle'>+</span>${obj.item.eventsCount}</span>`;
+            mainElement.appendChild(subElement);
+            parent.appendChild(mainElement);
 
             // if there are sub-items call buildMenu to build sub menu
             if (obj.items && obj.items.length > 0) {
-                let subElement = document.createElement('div');
-                subElement.classList.add(`menu_lvl_${obj.item.level+1}`);
-                element.appendChild(subElement);
-                buildMenu(subElement, obj.items);
+                // let subMenuElement = document.createElement('div');
+                // subMenuElement.classList.add(`lvl_${obj.item.level+1}`);
+                // mainElement.appendChild(subMenuElement);
+                buildMenu(mainElement, obj.items);
             }
         }
     });
@@ -83,7 +100,7 @@ const handleDisplayError = (error) => {
 fetchMenuData()
     .then(data => {
         menuArray = buildAndReturnMenuArray(data.data);
-        buildMenu(menuNode,menuArray);
+        buildMenu(menuNode, menuArray);
         console.log(menuArray);
     })
     .catch(error => {
