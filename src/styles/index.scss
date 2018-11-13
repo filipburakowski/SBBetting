@@ -1,36 +1,51 @@
-$background_On: #006400;
-$background_Off: #32CD32;
-$background_Hover: #228B22;
+//Variables
+
+$background_lvl_1: #043A30;
+$background_lvl_2: #015247;
+$background_lvl_3: #042621;
+$background_hover: #686868;
 $fontSize: 12px;
 $distance: 6px;
 
-html, body {
-  font-size: $fontSize;
-  font-family: 'Montserrat', sans-serif;
-  margin: 0;
-  padding: 0;
-}
+//Mixins
 
-.categories {
-  width: 400px;
-  .item_description {
-    padding-left: $distance;
+@mixin menu($background) {
+  background-color: $background;
+  padding: $distance 0;
+  &:hover {
+    background-color: $background_hover;
+    cursor: pointer;
   }
   .event_count {
     float: right;
     padding-right: $distance;
   }
-  .menu_lvl_2, .menu_lvl_3 {
-    background-color: $background_On;
-    &:hover {
-      background-color: $background_Hover;
-      cursor: pointer;
-    }
+  .item_description {
+    padding-left: $distance;
   }
 }
 
-.menu_lvl_1, .menu_lvl_2, .menu_lvl_3 {
-  padding: $distance 0;
+//Styles
+
+html, body {
+  font-size: $fontSize;
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+.categories {
+  width: 320px;
+  .menu_lvl_1 {
+    @include menu($background_lvl_1);
+  }
+  .menu_lvl_2 {
+    @include menu($background_lvl_2);
+  }
+  .menu_lvl_3 {
+    @include menu($background_lvl_3);
+  }
 }
 
 .error_message {

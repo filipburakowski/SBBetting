@@ -7,14 +7,19 @@ const toggleMenu = (obj, parentCategory) => {
     let plusMinusElement = obj.querySelector('.menu_toggle');
     let subElements = obj.querySelectorAll(`div[parentCategory="${parentCategory}"]`);
 
-    //switching + and - if menu is clicked
     if (plusMinusElement.innerHTML === '+') {
-        plusMinusElement.innerHTML = '-'
-    } else
+        plusMinusElement.innerHTML = '-';
+        for (let i = 0; i < subElements.length; i++) {
+            subElements[i].classList.remove('hidden');
+        }
+    } else {
         plusMinusElement.innerHTML = '+';
-
-    for (let i = 0; i < subElements.length; i++) {
-        subElements[i].classList.toggle('hidden');
+        for (let i = 0; i < subElements.length; i++) {
+            subElements[i].querySelector('.menu_toggle').innerHTML = '+';
+            subElements[i].parentNode.querySelectorAll('[parentcategory]').forEach(node => {
+                node.classList.add('hidden');
+            });
+        }
     }
 };
 
@@ -57,7 +62,7 @@ const buildMenu = (parent, items) => {
             mainElement.classList.add(`lvl_${obj.item.level}`);
             subElement.classList.add(`menu_lvl_${obj.item.level}`);
 
-            //if element is not first level of menu hide
+            //hide if element is not first level of menu
             if (!subElement.classList.contains(`menu_lvl_1`)) {
                 subElement.classList.add('hidden')
             }
@@ -71,9 +76,6 @@ const buildMenu = (parent, items) => {
 
             // if there are sub-items call buildMenu to build sub menu
             if (obj.items && obj.items.length > 0) {
-                // let subMenuElement = document.createElement('div');
-                // subMenuElement.classList.add(`lvl_${obj.item.level+1}`);
-                // mainElement.appendChild(subMenuElement);
                 buildMenu(mainElement, obj.items);
             }
         }
@@ -83,6 +85,7 @@ const buildMenu = (parent, items) => {
 const fetchMenuData = () => {
     return fetch('https://www.lionsbet.com/rest/market/categories')
         .then(response => {
+            console.log(response);
             if (response.ok) {
                 return response.json()
             }
@@ -94,19 +97,14 @@ const fetchMenuData = () => {
 const handleDisplayError = (error) => {
     let errorNode = document.createElement('div');
     errorNode.classList.add('error_message');
-    errorNode.innerHTML = `<p>There has been an error:<div>${error.message}</div></p>`;
+    errorNode.innerHTML = `<div>There has been an error:<div>${error.message}</div></div>`;
 };
 
 fetchMenuData()
     .then(data => {
         menuArray = buildAndReturnMenuArray(data.data);
         buildMenu(menuNode, menuArray);
-        console.log(menuArray);
     })
     .catch(error => {
         handleDisplayError(error);
     });
-
-
-
-

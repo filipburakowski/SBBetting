@@ -10,6 +10,14 @@ Author: Filip Burakowski
 3. Start application using 'npm run dev'
 4. Open http://localhost at a given port. Default port number is 1234.
 
+
+**Task guidelines**
+
+1. Create folding menu
+2. Data provided are in JSON format
+3. Endpoint returns array 'data' with elements as categories for menu.
+4. Complete the task using task runner, LESS/SASS and JS/jquery. 
+
 **Wytyczne zadania**
 
 1. Zadaniem jest wykonanie harmonijki kategorii.
